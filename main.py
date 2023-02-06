@@ -10,7 +10,6 @@ def are_matching(left, right):
 
 
 def find_mismatch(text):
-    global opening_brackets_stack
     opening_brackets_stack = []
     for i, next in enumerate(text):
         if next in "([{":
@@ -19,21 +18,22 @@ def find_mismatch(text):
 
         if next in ")]}":
             # Process closing bracket, write your code here
-            if len(opening_brackets_stack)==0 or not(are_matching(opening_brackets_stack[-1].char,next)):
-                opening_brackets_stack.append(Bracket(next, i + 1))
-                return
+            if len(opening_brackets_stack) == 0 or not are_matching(opening_brackets_stack[-1].char, next):
+                return i + 1         
             opening_brackets_stack.pop()
+    if len(opening_brackets_stack) == 0:
+        return None                               
+    return opening_brackets_stack[-1].position
 
 
 def main():
-    text = input()
+    text = input() 
     mismatch = find_mismatch(text)
     # Printing answer, write your code here
-    if len(opening_brackets_stack)!=0:
-        print(opening_brackets_stack[-1].position)
+    if mismatch is None:
+        print("Success")   
     else:
-        print("Success")
-
+        print(mismatch)
 
 if __name__ == "__main__":
     main()
