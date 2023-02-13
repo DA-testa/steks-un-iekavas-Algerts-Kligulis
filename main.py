@@ -1,13 +1,12 @@
 # python3
+import requests
 
 from collections import namedtuple
 
 Bracket = namedtuple("Bracket", ["char", "position"])
 
-
 def are_matching(left, right):
     return (left + right) in ["()", "[]", "{}"]
-
 
 def find_mismatch(text):
     opening_brackets_stack = []
@@ -25,11 +24,14 @@ def find_mismatch(text):
         return None                               
     return opening_brackets_stack[-1].position
 
-
 def main():
-    text = input() 
+    text = input()
+    url = 'https://github.com/DA-testa/steks-un-iekavas-Algerts-Kligulis/blob/main/test/1'
+    if text.startswith('I'):
+        text = input()
+    else:
+        text = requests.get(url).text        
     mismatch = find_mismatch(text)
-    # Printing answer, write your code here
     if mismatch is None:
         print("Success")   
     else:
